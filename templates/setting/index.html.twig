@@ -1,0 +1,87 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block body %}
+    <section class="content">
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        {% form_theme form 'admin/form_errors.html.twig' %}
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-primary">
+                    <div class="card-header bg-light">
+                        <h4 class="text-bold">{{ 'Settings'|trans }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3 col-sm-3">
+                                <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+                                    <a class="nav-link active" id="vert-tabs-settings-tab" data-toggle="pill" href="#vert-tabs-settings" role="tab" aria-controls="vert-tabs-settings" aria-selected="false">{{ 'Settings'|trans }}</a>
+                                    <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">{{ 'Profile'|trans }}</a>
+                                    <a class="nav-link" id="vert-tabs-article-tab" data-toggle="pill" href="#vert-tabs-article" role="tab" aria-controls="vert-tabs-article" aria-selected="false">{{ 'Article'|trans }}</a>
+                                </div>
+                            </div>
+                            <div class="col-9 col-sm-9">
+                                <div class="tab-content" id="vert-tabs-tabContent">
+                                    <div class="tab-pane fade show active" id="vert-tabs-settings" role="tabpanel" aria-labelledby="vert-tabs-settings-tab">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="form-group">
+                                                    {% set required_appName = form.appName.vars.errors|length > 0 ? 'is-invalid':'' %}
+                                                    {{ form_label(form.appName) }}<span>*</span>
+                                                    {{ form_widget(form.appName, {'attr': {'class': 'form-control '~ required_appName}}) }}
+                                                    {{ form_errors(form.appName) }}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="form-group">
+                                                    {{ form_label(form.pageSize) }}
+                                                    {{ form_widget(form.pageSize, {'attr': {'class': 'form-control custom-select'}}) }}
+                                                    {{ form_errors(form.pageSize) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="vert-tabs-profile" role="tabpanel" aria-labelledby="vert-tabs-profile-tab">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    {{ form_label(form.userRole) }}
+                                                    {{ form_widget(form.userRole, {'attr': {'class': 'form-control custom-select'}}) }}
+                                                    {{ form_errors(form.userRole) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="vert-tabs-article" role="tabpanel" aria-labelledby="vert-tabs-article-tab">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-check">
+                                                    {{ form_widget(form.isArticlePublish, {'attr': {'class': 'form-check-input'}}) }}
+                                                    {{ form_label(form.isArticlePublish,'', {'label_attr': {'class': 'form-check-label'}}) }}
+                                                    {{ form_errors(form.isArticlePublish) }}
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    {{ form_widget(form.isLoginUserAuthor, {'attr': {'class': 'form-check-input'}}) }}
+                                                    {{ form_label(form.isLoginUserAuthor, '', {'label_attr': {'class': 'form-check-label'}}) }}
+                                                    {{ form_errors(form.isLoginUserAuthor) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <a href="{{ path('setting_index') }}" class="btn btn-outline-secondary mr-2">{{ 'Cancel'|trans }}</a>
+                        <input type="submit" value="{{ 'Save'|trans }}" class="btn btn-purple">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

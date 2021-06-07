@@ -1,0 +1,37 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block body %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-6"><h4 class="text-bold">{{ 'Booking Calendar'|trans }}</h4></div>
+                            {% if (userRole.isAdd) %}
+                                <div class="col-6 text-right">
+                                    <a href="{{ path('booking_new') }}" class="btn btn-sm btn-outline-purple"><i class="fas fa-plus"></i>
+                                        {{ 'Add New'|trans }}</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div id="calendar-holder" data-events-url="{{ path('fc_load_events') }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block style %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('calendar') }}
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('calendar') }}
+{% endblock %}

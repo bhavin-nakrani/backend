@@ -1,0 +1,58 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block body %}
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header bg-light">
+                        <h4 class="text-bold">{{ 'Role Detail'|trans }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label>{{ 'Name'|trans }}</label>
+                                    <p class="text-muted">{{ role.name }}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label>{{ 'isAdd'|trans }}</label>
+                                    <p class="text-muted">{{ (role.isAdd)?'Yes':'No' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label>{{ 'isEdit'|trans }}</label>
+                                    <p class="text-muted">{{ (role.isEdit)?'Yes':'No' }}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label>{{ 'isDelete'|trans }}</label>
+                                    <p class="text-muted">{{ (role.isDelete)?'Yes':'No' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label>{{ 'isView'|trans }}</label>
+                                    <p class="text-muted">{{ (role.isView)?'Yes':'No' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <a href="{{ path('role_index') }}" class="btn btn-outline-secondary mr-2">{{ 'Back'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

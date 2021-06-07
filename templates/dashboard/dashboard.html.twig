@@ -1,0 +1,189 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block body %}
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-gradient-purple">
+                        <div class="inner">
+                            <h3>150</h3>
+
+                            <p>New Orders</p>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-gradient-pink">
+                        <div class="inner">
+                            <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                            <p>Bounce Rate</p>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-gradient-cyan">
+                        <div class="inner">
+                            <h3>44</h3>
+
+                            <p>User Registrations</p>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-gradient-yellow">
+                        <div class="inner">
+                            <h3>65</h3>
+
+                            <p>Unique Visitors</p>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="chart-1"></div>
+                </div>
+                <div class="col-6">
+					<canvas id="chart-2"></canvas>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/chart_utils.js') }}"></script>
+    <script>
+    function createConfig() {
+			return {
+				type: 'line',
+				data: {
+					labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+					datasets: [{
+						label: 'Dataset',
+						borderColor: window.chartColors.red,
+						backgroundColor: window.chartColors.red,
+						data: [10, 30, 46, 2, 8, 50, 0],
+						fill: false,
+					}]
+				},
+				options: {
+					responsive: true,
+					title: {
+						display: true,
+						text: 'Sample tooltip with border'
+					},
+					tooltips: {
+						position: 'nearest',
+						mode: 'index',
+						intersect: false,
+						yPadding: 10,
+						xPadding: 10,
+						caretSize: 8,
+						backgroundColor: 'rgba(72, 241, 12, 1)',
+						titleFontColor: window.chartColors.black,
+						bodyFontColor: window.chartColors.black,
+						borderColor: 'rgba(0,0,0,1)',
+						borderWidth: 4
+					},
+				}
+			};
+		}
+
+		var barChartData = {
+			labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+			datasets: [{
+				label: 'Dataset 1',
+				backgroundColor: window.chartColors.red,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				]
+			}, {
+				label: 'Dataset 2',
+				backgroundColor: window.chartColors.blue,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				]
+			}, {
+				label: 'Dataset 3',
+				backgroundColor: window.chartColors.green,
+				data: [
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor(),
+					randomScalingFactor()
+				]
+			}]
+
+		};
+    $(document).ready(function() {
+        var container = document.querySelector('.chart-1');
+			var div = document.createElement('div');
+			div.classList.add('chart-container');
+
+			var canvas = document.createElement('canvas');
+			div.appendChild(canvas);
+			container.appendChild(div);
+
+			var ctx = canvas.getContext('2d');
+			var config = createConfig();
+			new Chart(ctx, config);
+
+			var ctx2 = document.getElementById('chart-2').getContext('2d');
+			window.myBar = new Chart(ctx2, {
+				type: 'bar',
+				data: barChartData,
+				options: {
+					title: {
+						display: true,
+						text: 'Bar Chart - Stacked'
+					},
+					tooltips: {
+						mode: 'index',
+						intersect: false
+					},
+					responsive: true,
+					scales: {
+						xAxes: [{
+							stacked: true,
+						}],
+						yAxes: [{
+							stacked: true
+						}]
+					}
+				}
+			});
+    });
+    </script>
+{% endblock %}

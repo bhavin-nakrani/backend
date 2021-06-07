@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css?family=Muli:400,900&display=swap");
+
+#calendar-holder {
+    font-family: "Muli", sans-serif;
+    margin: 0 auto;
+}
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: rgba(118, 124, 223, 0.15);
+}
+.fc-toolbar h2,
+.fc th {
+    font-weight: inherit;
+}
+.fc .fc-button-primary {
+    background-color: #6f42c1;
+    border-color: #6f42c1;
+}
+.fc .fc-button-primary:hover {
+    background-color: #5e38a4;
+    border-color: #5e38a4;
+}
+.fc .fc-button-primary:disabled {
+    background-color: #6f42c1;
+    border-color: #6f42c1;
+}
+.fc .fc-button-primary:not(:disabled).fc-button-active, .fc .fc-button-primary:not(:disabled):active {
+    background-color: #5e38a4;
+    border-color: #5e38a4;
+}

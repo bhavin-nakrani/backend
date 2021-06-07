@@ -1,0 +1,49 @@
+{% extends 'userbase.html.twig' %}
+
+{% block title %}{{ 'Reset your password'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row box-center">
+            <div class="col-12 d-flex justify-content-center">
+                <div class="card w-50">
+                    <div class="card-body login-card-body">
+                        <div class="login-logo">
+                            <a href="#"><b>{{ setting.appName }}</b></a>
+                        </div>
+                        {% for flashError in app.flashes('reset_password_error') %}
+                            <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+                        {% endfor %}
+                        <p class="login-box-msg">
+                            Enter your email address and we we will send you a link to reset your password.
+                        </p>
+
+                        {{ form_start(requestForm) }}
+                        <div class="input-group mb-3">
+                            {{ form_widget(requestForm.email, {'attr': {'class':'form-control', 'placeholder': 'Email'}}) }}
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-purple btn-block">{{ 'Request new password'|trans }}</button>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        {{ form_end(requestForm) }}
+
+                        <p class="mt-3 mb-1">
+                            <a href="{{ path('app_login') }}">{{ "Login"|trans }}</a>
+                        </p>
+                        <p class="mb-0">
+                            <a href="{{ path('app_register') }}" class="text-center">{{ "Register a new membership"|trans }}</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

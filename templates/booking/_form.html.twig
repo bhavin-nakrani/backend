@@ -1,0 +1,75 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block body %}
+    <section class="content">
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        {% form_theme form 'admin/form_errors.html.twig' %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header bg-light">
+                        <h4 class="text-bold">{{ (booking.id)? 'Edit':'New' }} {{ 'Booking'|trans }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    {% set required_title = form.title.vars.errors|length > 0 ? 'is-invalid':'' %}
+                                    {{ form_label(form.title) }}<span>*</span>
+                                    {{ form_widget(form.title, {'attr': {'class': 'form-control '~ required_title}}) }}
+                                    {{ form_errors(form.title) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3">
+                                <div class="form-group">
+                                    {{ form_label(form.beginAt) }}<span>*</span>
+                                    <div class="input-group date" id="{{ form.beginAt.vars.id }}" data-target-input="nearest">
+                                        {{ form_widget(form.beginAt) }}
+                                        <div class="input-group-append" data-target="#{{ form.beginAt.vars.id }}" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                    {{ form_errors(form.beginAt) }}
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3">
+                                <div class="form-group">
+                                    {{ form_label(form.endAt) }}
+                                    <div class="input-group date" id="{{ form.endAt.vars.id }}" data-target-input="nearest">
+                                        {{ form_widget(form.endAt) }}
+                                        <div class="input-group-append" data-target="#{{ form.endAt.vars.id }}" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                    {{ form_errors(form.endAt) }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer text-right">
+                        <a href="{{ path('booking_index') }}" class="btn btn-outline-secondary mr-2">{{ 'Cancel'|trans }}</a>
+                        <input type="submit" value="{{ 'Save'|trans }}" class="btn btn-purple">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}
+{% block javascript %}
+{{ parent() }}
+<script>
+    $(function () {
+        $('#booking_beginAt').datetimepicker({
+            format: '{{ DATETIME_FORMAT }}'
+        });
+        $('#booking_endAt').datetimepicker({
+            format: '{{ DATETIME_FORMAT }}'
+        });
+     });
+</script>
+{% endblock %}

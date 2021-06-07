@@ -1,0 +1,6 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    globals:
+        APP_NAME: '%APP_NAME%'
+        USER_IMAGE_DIR: '%USER_IMAGE_DIR%'
+        DATETIME_FORMAT: '%DATETIME_FORMAT%'

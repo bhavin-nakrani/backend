@@ -1,0 +1,10 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+JMSTranslationBundle_ui:
+  resource: "@JMSTranslationBundle/Controller/"
+  type:     annotation
+  prefix:   /_trans
+
+api_login_check:
+  path: /api/login_check

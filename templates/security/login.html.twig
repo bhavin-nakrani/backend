@@ -1,0 +1,71 @@
+{% extends 'userbase.html.twig' %}
+
+{% block title %}{{ 'Log in'|trans }}!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row box-center">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="card w-50">
+                <div class="card-body login-card-body">
+                    <div class="login-logo">
+                        <a href="#"><b>{{ setting.appName }}</b></a>
+                    </div>
+
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    {% if app.user %}
+                        <div class="mb-3">
+                            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">{{ 'Logout'|trans }}</a>
+                        </div>
+                    {% endif %}
+
+                    <p class="login-box-msg">{{ 'Sign in to start your session'|trans }}</p>
+
+                    <form method="post">
+                        <div class="input-group mb-3">
+                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="Email" class="form-control" required autofocus>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <div class="row">
+                            <div class="col-8">
+                                <input type="checkbox" id="remember_me" name="_remember_me">
+                                <label for="remember_me" class="form-check-label">
+                                    {{ 'Remember Me'|trans }}
+                                </label>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-purple btn-block" type="submit">
+                                    {{ 'Sign in'|trans }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <p class="mb-1">
+                        <a href="{{ path('app_forgot_password_request') }}">{{ 'I forgot my password'|trans }}</a>
+                    </p>
+                    <p class="mb-0">
+                        <a href="{{ path('app_register') }}" class="text-center">{{ 'Register a new membership'|trans }}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block body %}
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header bg-light">
+                        <h4 class="text-bold">{{ 'View Booking'|trans }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                    <tr>
+                                        <th>{{ 'Id'|trans }}</th>
+                                        <td>{{ booking.id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'Title'|trans }}</th>
+                                        <td>{{ booking.title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'BeginAt'|trans }}</th>
+                                        <td>{{ booking.beginAt ? booking.beginAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'EndAt'|trans }}</th>
+                                        <td>{{ booking.endAt ? booking.endAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <a href="{{ path('booking_index') }}" class="btn btn-outline-secondary mr-2">{{ 'Back to List'|trans }}</a>
+                        <a href="{{ path('booking_edit', {'id': booking.id}) }}" class="btn btn-purple">{{ 'Edit'|trans }}</a>
+                        <a onclick="deleteBooking('{{ booking.id }}');" href="javascript:;" class="btn btn-danger">{{ 'Delete'|trans }}</a>
+                    </div>
+                    <form method="post" action="" id="delete_booking_form">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete-item') }}">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+{% block javascript %}
+{{ parent() }}
+<script>
+    function deleteBooking(id) {
+        var r = confirm("Do you want to delete record?");
+        if (r === true) {
+            let delUrl = Routing.generate('booking_delete', { id: id });
+            $('#delete_booking_form').attr('action', delUrl);
+            $('#delete_booking_form').submit();
+        }
+    }
+</script>
+{% endblock %}

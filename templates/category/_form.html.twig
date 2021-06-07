@@ -1,0 +1,45 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block body %}
+    <section class="content">
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        {% form_theme form 'admin/form_errors.html.twig' %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header bg-light">
+                        <h4 class="text-bold">{{ (category.id)? 'Edit':'New' }} Category</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    {% set required_title = form.title.vars.errors|length > 0 ? 'is-invalid':'' %}
+                                    {{ form_label(form.title) }}<span>*</span>
+                                    {{ form_widget(form.title, {'attr': {'class': 'form-control '~ required_title}}) }}
+                                    {{ form_errors(form.title) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    {% set required_slug = form.slug.vars.errors|length > 0 ? 'is-invalid':'' %}
+                                    {{ form_label(form.slug) }}<span>*</span>
+                                    {{ form_widget(form.slug, {'attr': {'class': 'form-control '~ required_slug}}) }}
+                                    {{ form_errors(form.slug) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <a href="{{ path('category_index') }}" class="btn btn-outline-secondary mr-2">{{ 'Cancel'|trans }}</a>
+                        <input type="submit" value="{{ 'Save'|trans }}" class="btn btn-purple">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

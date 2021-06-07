@@ -1,0 +1,118 @@
+<nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+    <div class="container-fluid">
+        <a href="{{ path('dashboard') }}" class="navbar-brand">
+            <img src="{{ asset('build/images/logo.png') }}"
+                 alt="Logo"
+                 class="brand-image img-circle elevation-3"
+                 style="opacity: .8">
+            <span class="brand-text font-weight-light">{{ setting.appName }}</span>
+        </a>
+
+        <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="{{ path('dashboard') }}" class="nav-link {{ (current_path == 'dashboard')? 'active':'' }}">
+                       {{ 'Dashboard'|trans }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('category_index') }}" class="nav-link {{ (current_path == 'category_index')? 'active':'' }}">
+                        {{ 'Category'|trans }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('article_index') }}" class="nav-link {{ (current_path == 'article_index')? 'active':'' }}">
+                        {{ 'Article'|trans }}
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    {% set bookingSelection = '' %}
+                    {% if (current_path == 'booking_index' or current_path == 'booking_calendar') %}
+                    {% set bookingSelection = 'active' %}
+                    {% endif %}
+                    <a href="#" class="nav-link dropdown-toggle {{ bookingSelection }}" data-toggle="dropdown">{{ 'Booking'|trans }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="nav-item"><a href="{{ path('booking_index') }}" class="nav-link {{ (current_path == 'booking_index')? 'active':'' }}">{{ 'List'|trans }}</a></li>
+                        <li class="nav-item"><a href="{{ path('booking_calendar') }}" class="nav-link {{ (current_path == 'booking_calendar')? 'active':'' }}">{{ 'Calendar'|trans }}</a></li>
+                    </ul>
+                </li>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item has-treeview">
+                        <a href="{{ path('user_index') }}" class="nav-link {{ (current_path == 'user_index')? 'active':'' }}">
+                           {{ 'User'|trans }}
+                        </a>
+                    </li>
+                    <li class="nav-item has-treeview">
+                        <a href="{{ path('role_index') }}" class="nav-link {{ (current_path == 'role_index')? 'active':'' }}">
+                            {{ 'Role'|trans }}
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ path('jms_translation_index') }}" target="_blank" class="nav-link {{ (current_path == 'jms_translation_index')? 'active':'' }}">
+                            {{ 'Translation'|trans }}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+        {% set requestArray = app.request.query.all|slice(1) %}
+        {% set parameterArray = requestArray|merge(app.request.attributes.get('_route_params')) %}
+        {% if (app.request.locale == 'en') %}
+            {% set activeLng = 'us' %}
+        {% elseif (app.request.locale == 'de') %}
+            {% set activeLng = 'de' %}
+        {% endif %}
+        <!-- Right navbar links -->
+        <ul class="order-1 order-md-3 d-flex navbar-nav navbar-no-expand ml-auto">
+            <!-- Notifications Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#" title="Language">
+                    <i class="flag-icon flag-icon-{{ activeLng }}"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right p-0">
+                    <a href="{{ path(app.request.get('_route'), parameterArray|merge({'_locale': 'en'})) }}" class="dropdown-item {{ (activeLng == 'en')? 'active':'' }}">
+                        <i class="flag-icon flag-icon-us mr-2"></i> English
+                    </a>
+                    <a href="{{ path(app.request.get('_route'), parameterArray|merge({'_locale': 'de'})) }}" class="dropdown-item {{ (activeLng == 'de')? 'active':'' }}">
+                        <i class="flag-icon flag-icon-de mr-2"></i> German
+                    </a>
+                </div>
+            </li>
+            {% if app.user.photo %}
+                {% set photo =  asset(USER_IMAGE_DIR)~'/'~app.user.photo %}
+            {% else %}
+                {% set photo = 'https://via.placeholder.com/30x30' %}
+            {% endif %}
+            <li class="nav-item dropdown user-menu">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <img src="{{ photo }}" class="user-image img-circle elevation-2" alt="{{ (app.user.name)? app.user.name : app.user.email }}">
+                    <span class="d-none d-md-inline">{{ (app.user.name)? app.user.name : app.user.email }}</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <!-- User image -->
+                    <li class="user-header bg-purple">
+                        <img src="{{ photo }}" class="img-circle elevation-2" alt="{{ (app.user.name)? app.user.name : app.user.email }}">
+                        <p>
+                            {{ (app.user.name)? app.user.name : app.user.email }}
+                            <small>{{ app.user.email }}</small>
+                        </p>
+                    </li>
+
+                    <!-- Menu Footer-->
+                    <li class="user-footer">
+                        <a href="{{ path('setting_index') }}" class="btn btn-default btn-flat">{{ 'Settings'|trans }}</a>
+                        <a href="{{ path('app_logout') }}" class="btn btn-default btn-flat float-right">{{ 'Logout'|trans }}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>

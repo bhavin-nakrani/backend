@@ -1,0 +1,31 @@
+{% extends 'userbase.html.twig' %}
+
+{% block title %}{{ 'Reset your password'|trans }}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row box-center">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="card w-50">
+                <div class="card-body login-card-body">
+                    <div class="login-logo">
+                        <a href="#"><b>{{ 'Reset your password'|trans }}</b></a>
+                    </div>
+                    {{ form_start(resetForm) }}
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form_row(resetForm.plainPassword) }}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <button class="btn btn-purple">{{ 'Reset password'|trans }}</button>
+                        </div>
+                    </div>
+                    {{ form_end(resetForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

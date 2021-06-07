@@ -1,0 +1,132 @@
+{% extends 'admin/admin_base.html.twig' %}
+{% block style %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/plugins/summernote/summernote-bs4.css') }}">
+{% endblock %}
+{% block body %}
+    <section class="content">
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        {% form_theme form 'admin/form_errors.html.twig' %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header bg-light">
+                        <h4 class="text-bold">{{ (article.id)? 'Edit':'New' }} Article</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    {{ form_label(form.category) }}
+                                    {{ form_widget(form.category, {'attr': {'class': 'form-control custom-select'}}) }}
+                                    {{ form_errors(form.category) }}
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    {% set required_title = form.title.vars.errors|length > 0 ? 'is-invalid':'' %}
+                                    {{ form_label(form.title) }}<span>*</span>
+                                    {{ form_widget(form.title, {'attr': {'class': 'form-control '~ required_title}}) }}
+                                    {{ form_errors(form.title) }}
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    {% set required_slug = form.slug.vars.errors|length > 0 ? 'is-invalid':'' %}
+                                    {{ form_label(form.slug) }}<span>*</span>
+                                    {{ form_widget(form.slug, {'attr': {'class': 'form-control '~ required_slug}}) }}
+                                    {{ form_errors(form.slug) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    {{ form_label(form.shortDescription) }}
+                                    {{ form_widget(form.shortDescription, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.shortDescription) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    {{ form_label(form.description) }}
+                                    {{ form_widget(form.description, {'attr': {'class': 'form-control textarea'}}) }}
+                                    {{ form_errors(form.description) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    {{ form_label(form.author) }}
+                                    {{ form_widget(form.author, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.author) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-check">
+                                    {{ form_widget(form.isPublish, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(form.isPublish,'', {'label_attr': {'class': ''}}) }}
+                                    {{ form_errors(form.isPublish) }}
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    {{ form_label(form.metaTitle) }}
+                                    {{ form_widget(form.metaTitle, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.metaTitle) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    {{ form_label(form.metaKeyword) }}
+                                    {{ form_widget(form.metaKeyword, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.metaKeyword) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    {{ form_label(form.metaDescription) }}
+                                    {{ form_widget(form.metaDescription, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.metaDescription) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <a href="{{ path('article_index') }}" class="btn btn-outline-secondary mr-2">{{ 'Cancel'|trans }}</a>
+                        <input type="submit" value="{{ 'Save'|trans }}" class="btn btn-purple">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+    <script src="{{ asset('build/plugins/summernote/summernote-bs4.min.js') }}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.textarea').summernote({
+                height: 190
+            })
+        });
+    </script>
+{% endblock %}
